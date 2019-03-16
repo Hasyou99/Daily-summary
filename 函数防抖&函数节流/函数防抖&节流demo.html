@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <h2>函数防抖</h2>
+    请输入搜索词：<input type="text" id="search" list="search_list" name="">
+    <datalist id="search_list"></datalist>
+    
+    <script>
+        (function ($) {
+            var $search = $('#search');
+            var $search_list = $('#search_list');
+            var timer = null;
+            $search.on('keyup', function () {
+                timer && clearTimeout(timer);
+                timer = setTimeout(handleChange, 500);
+            });
+
+            function handleChange() {
+                var s = $search.val();
+                $search_list.empty();
+                fetchBaiduSuggest(s, function (word, result) {
+                    result.map(function (w) {
+                        $('<option />').val(w).text(w).appendTo($search_list);
+                    });
+                });
+            }
+
+            function fetchBaiduSuggest(word, cb) {
+                $.getJSON("http://suggestion.baidu.com/su?wd=" + encodeURIComponent(word) + "&cb=?", function (
+                    data) {
+                    if ($.isArray(data.s)) {
+                        cb(word, data.s);
+                    }
+                });
+            }
+        })(jQuery);
+    </script>
+
+
+    <h2>函数节流</h2>
+    <div>
+        X: <span id='x'></span>
+        Y: <span id='y'></span>
+    </div>
+    <script>
+    (function($){
+        var $x = $('#x');
+        var $y = $('#y');
+        var isRun = true;
+
+        $(document).on('mousemove',function(event){
+            var e = event || window.event;
+            if(!isRun) return; // 判断是否已空闲，如果在执行中，则直接return
+            isRun = false;
+            setTimeout(function(){
+                $x.text(e.pageX);
+                $y.text(e.pageY);
+                isRun = true;
+            },100)
+        })
+    })(jQuery);
+    </script>
+
+</body>
+
+</html>
