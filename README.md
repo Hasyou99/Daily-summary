@@ -152,3 +152,5 @@
 	三、总结
 
 	函数防抖和函数节流是在时间轴上控制函数的执行次数。函数节流和函数去抖的核心其实就是限制某一个方法被频繁触发，而一个方法之所以会被频繁触发，大多数情况下是因为 DOM 事件的监听回调，而这也是函数节流以及去抖多数情况下的应用场景
+
+	[github地址：https://github.com/Hasyou99/Daily-summary](https://github.com/Hasyou99/Daily-summary)
